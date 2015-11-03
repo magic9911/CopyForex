@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testUnmanagedDLL", "testUnmanagedDLL\testUnmanagedDLL.csproj", "{46715A67-B134-473C-ACE4-EF6AA1C0E688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{75A1BE35-D034-44D1-994E-005E32642C77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,18 @@ Global
 		{46715A67-B134-473C-ACE4-EF6AA1C0E688}.Release|x64.Build.0 = Release|x64
 		{46715A67-B134-473C-ACE4-EF6AA1C0E688}.Release|x86.ActiveCfg = Release|x86
 		{46715A67-B134-473C-ACE4-EF6AA1C0E688}.Release|x86.Build.0 = Release|x86
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|x64.Build.0 = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Debug|x86.Build.0 = Debug|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x64.ActiveCfg = Release|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x64.Build.0 = Release|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x86.ActiveCfg = Release|Any CPU
+		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

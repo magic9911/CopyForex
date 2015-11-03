@@ -7,8 +7,8 @@
     <ProjectGuid>{46715A67-B134-473C-ACE4-EF6AA1C0E688}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>testUMD</RootNamespace>
-    <AssemblyName>testUMD</AssemblyName>
+    <RootNamespace>CopyForex</RootNamespace>
+    <AssemblyName>CopyForex</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
