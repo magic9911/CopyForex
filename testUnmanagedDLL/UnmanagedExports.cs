@@ -4,36 +4,103 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using testUMD;
 using System.Threading;
+using System;
 
 namespace testUnmanagedDLL {
-    class Test {
-        [DllExport("Data_POST", CallingConvention = CallingConvention.StdCall)]
-        public static void Data_POST(double Bid,double Ask ,string Pos) {
-            
+    class CopyDll {
 
+        private static Form1 oneForm;
+        private static Thread appThread;
+
+        public static string res = string.Empty;
+
+
+        [DllExport("GUI_Form", CallingConvention = CallingConvention.StdCall)]
+        public static void GUI_Form()
+        {
+            appThread = new Thread(new ThreadStart(OpenForm));
+            appThread.Start();
+        }
+
+        public static void OpenForm()
+        {
+            Application.Run(oneForm = new Form1());
+        }
+
+        [DllExport("Shutdown", CallingConvention = CallingConvention.StdCall)]
+        public static void Shutdown()
+        {
+            if (null == oneForm)
+                return;
+
+            oneForm.Invoke(new Action(() => {
+                oneForm.Close();
+                oneForm.Dispose();
+                oneForm = null;
+            }));
+
+        }
+
+
+        [DllExport("Data_POST", CallingConvention = CallingConvention.StdCall)]
+        public static IntPtr Data_POST(double Balance, IntPtr charPos)
+        {
+            string res = string.Empty;
+            if (null == oneForm)
+                return Marshal.StringToHGlobalUni(res);
+
+            var Pos = Marshal.PtrToStringAnsi(charPos);
+
+            oneForm.Invoke(new Action(() => {
+                res = oneForm.SendData("POST;" + Balance.ToString() + ";" + Pos);
+            }));
+
+            return Marshal.StringToHGlobalUni(res);
         }
 
         [DllExport("Get_NewOrder", CallingConvention = CallingConvention.StdCall)]
-        public static string Get_NewOrder() {
+        public static IntPtr Get_NewOrder(IntPtr symbol)
+        {
+            string res = string.Empty;
+            if (null == oneForm)
+                return Marshal.StringToHGlobalUni(res);
 
-            return null;
+            var Symbol = Marshal.PtrToStringAnsi(symbol);
+
+            oneForm.Invoke(new Action(() => {
+                res = oneForm.SendData("NewOrder;" + Symbol);
+            }));
+
+            return Marshal.StringToHGlobalUni(res);
         }
 
         [DllExport("Get_CloseOrder", CallingConvention = CallingConvention.StdCall)]
-        public static string Get_CloseOrder() {
+        public static IntPtr Get_CloseOrder(int id)
+        {
+            string res = string.Empty;
+            if (null == oneForm)
+                return Marshal.StringToHGlobalUni(res);
 
-            return null;
+            oneForm.Invoke(new Action(() => {
+                res = oneForm.SendData("CloseOrder;" + id.ToString());
+            }));
+
+            return Marshal.StringToHGlobalUni(res);
         }
 
-        [DllExport("GUI_Form", CallingConvention = CallingConvention.StdCall)]
-        public static void GUI_Form() {
-            new Thread(new ThreadStart(OpenForm)).Start();
-        }
 
-        public static void OpenForm() {
-            Application.Run(new Form1());
-        }
+        [DllExport("FormChangeTitle", CallingConvention = CallingConvention.StdCall)]
+        public static void FormChangeTitle(IntPtr title)
+        {
+            if (null == oneForm)
+                return;
 
+            var Tital = Marshal.PtrToStringAnsi(title);
+
+            oneForm.Invoke(new Action(() => {
+                oneForm.Text = Tital;
+            }));
+        }
     }
 }
 

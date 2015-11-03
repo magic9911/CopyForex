@@ -29,10 +29,10 @@ namespace testUMD {
             textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + mesg;
         }
 
-        private void SendData()
+        public string SendData(string data)
         {
             NetworkStream serverStream = clientSocket.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("Message from Client$");
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(data);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
 
@@ -40,6 +40,7 @@ namespace testUMD {
             serverStream.Read(inStream, 0, (int)clientSocket.ReceiveBufferSize);
             string returndata = System.Text.Encoding.ASCII.GetString(inStream);
             msg("Data from Server : " + returndata);
+            return returndata;
         }
     }
 }
