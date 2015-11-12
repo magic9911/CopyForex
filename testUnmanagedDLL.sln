@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testUnmanagedDLL", "testUnm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{75A1BE35-D034-44D1-994E-005E32642C77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x64.Build.0 = Release|Any CPU
 		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x86.ActiveCfg = Release|Any CPU
 		{75A1BE35-D034-44D1-994E-005E32642C77}.Release|x86.Build.0 = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|x64.Build.0 = Debug|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|x86.ActiveCfg = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Debug|x86.Build.0 = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|x64.ActiveCfg = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|x64.Build.0 = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|x86.ActiveCfg = Release|Any CPU
+		{3FDBE129-0DC4-4F38-8608-B9BE59BC89F8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,7 +12,7 @@ namespace testUnmanagedDLL {
 
         private static Form1 oneForm;
         private static Thread appThread;
-        private static SendData senddata;
+        private static SendData senddata = new SendData();
 
         public static string res = string.Empty;
 
