@@ -15,9 +15,9 @@ namespace Norr.CommonLib.Client
         public string Nick { get; set; }
 
         /// <summary>
-        /// Bytes of avatar of user.
+        /// Be a host?
         /// </summary>
-        public byte[] AvatarBytes { get; set; }
+        public bool isHost { get; set; }
         
     }
 }

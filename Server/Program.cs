@@ -51,7 +51,23 @@ namespace Server
         }
 
         private static void msgService_UserListChanged(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            UpdateUserList();
+        }
+
+        /// <summary>
+        /// Updates user list on GUI.
+        /// </summary>
+        private static void UpdateUserList() {
+            var users = new StringBuilder();
+            foreach (var user in _msgService.UserList) {
+                if (users.Length > 0) {
+                    users.Append(", ");
+                }
+
+                users.Append(user.Nick);
+            }
+
+            Console.WriteLine( users.ToString());
         }
     }
 }

@@ -8,7 +8,7 @@ using System;
 using CopyForex;
 
 namespace testUnmanagedDLL {
-    class CopyDll {
+    public class CopyDll {
 
         private static Form1 oneForm;
         private static Thread appThread;
@@ -53,11 +53,12 @@ namespace testUnmanagedDLL {
 
             var Pos = Marshal.PtrToStringAnsi(charPos);
 
+            oneForm.SendAll(Pos);
             //oneForm.Invoke(new Action(() => {
             //    res = oneForm.SendData("POST;" + Balance.ToString() + ";" + Pos);
             //}));
 
-            senddata.Send("POST;" + Balance.ToString() + ";" + Pos);
+            //senddata.Send("POST;" + Balance.ToString() + ";" + Pos);
             return Marshal.StringToHGlobalUni(res);
         }
 
@@ -96,7 +97,7 @@ namespace testUnmanagedDLL {
         [DllExport("Connect", CallingConvention = CallingConvention.StdCall)]
         public static void Connect()
         {
-            senddata.Connect();
+            //senddata.Connect();
         }
 
         [DllExport("FormChangeTitle", CallingConvention = CallingConvention.StdCall)]

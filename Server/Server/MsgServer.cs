@@ -111,6 +111,7 @@ namespace Nore.Server {
                 () => {
                     foreach (var chatClient in _clients.GetAllItems()) {
                         try {
+                            Console.WriteLine("Server > " + senderClient.User.Nick + " : " + message.MessageText);
                             chatClient.ClientProxy.OnMessageToRoom(senderClient.User.Nick, message);
                         } catch {
 

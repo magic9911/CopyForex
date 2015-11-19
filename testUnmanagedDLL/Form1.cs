@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CopyForex.Client;
+using Nore.CommonLib.Message;
+using Norr.CommonLib.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,38 +12,81 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace testUMD {
-    public partial class Form1 : Form {
-        System.Net.Sockets.TcpClient clientSocket = new System.Net.Sockets.TcpClient();
-        NetworkStream serverStream;
+    public partial class Form1 : Form, IMsgView {
+        private MsgController msgController;
 
         public Form1() {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            msg("Client Started");
-            clientSocket.Connect("127.0.0.1", 9000);
-            label1.Text = "Client Socket Program - Server Connected ...";
+        private void Form1_Load(object sender, EventArgs e) {
+            
+            
+            //msgController.SendMessageToRoom(new MessageData() {
+            //    MessageText = "HELLO WORLD"
+            //});
+            //clientSocket.Connect("127.0.0.1", 9000);
+            //label1.Text = "Client Socket Program - Server Connected ...";
         }
 
-        public void msg(string mesg)
-        {
-            textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + mesg;
+        public void msg(string msg) {
+            textBox1.Text += "\r\n >> " + msg;
         }
 
-        public string SendData(string data)
-        {
-            NetworkStream serverStream = clientSocket.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(data);
-            serverStream.Write(outStream, 0, outStream.Length);
-            serverStream.Flush();
+        private void btnConnect_Click(object sender, EventArgs e) {
+            msg("Client connecting...");
+            msgController = new MsgController();
+            msgController.FormView = this;
+            msgController.UserInfo = new UserInfo() {
+                Nick = "Test" + new Random().Next(),
+                isHost = chkHostSlave.Checked
+            };
+            msgController.Connect();
+        }
 
-            byte[] inStream = new byte[10025];
-            serverStream.Read(inStream, 0, (int)clientSocket.ReceiveBufferSize);
-            string returndata = System.Text.Encoding.ASCII.GetString(inStream);
-            msg("Data from Server : " + returndata);
-            return returndata;
+        private void chkHostSlave_CheckedChanged(object sender, EventArgs e) {
+            var chkBox = sender as CheckBox;
+            if (chkBox.Checked) {
+                chkBox.Text = "Host";
+            } else {
+                chkBox.Text = "Slave";
+            }
+        }
+
+        public void SendAll(string msg) {
+            if (null != msgController) {
+                MessageData msgData = new MessageData();
+                msgData.MessageText = msg;
+                msgController.SendMessageToRoom(msgData);
+            }
+        }
+
+        public void OnMessageReceived(string nick, MessageData message) {
+            msg(string.Format("[HOST] {0} : {1}", nick, message.MessageText));
+        }
+
+        public void OnPrivateMessageReceived(string nick, MessageData message) {
+            msg(string.Format("{0} : {1}", nick, message.MessageText));
+        }
+
+        public void OnLoggedIn() {
+            msg("Logged In.");
+        }
+
+        public void OnLoginError(string errorMessage) {
+            msg("Error : " + errorMessage);
+        }
+
+        public void OnLoggedOut() {
+            msg("Logged Out.");
+        }
+
+        public void AddUserToList(UserInfo userInfo) {
+            msg("User joined : " + userInfo.Nick);
+        }
+
+        public void RemoveUserFromList(string nick) {
+            msg("User quited : " + nick);
         }
     }
 }
