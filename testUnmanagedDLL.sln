@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testUnmanagedDLL", "testUnmanagedDLL\testUnmanagedDLL.csproj", "{46715A67-B134-473C-ACE4-EF6AA1C0E688}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyForexDLL", "testUnmanagedDLL\CopyForexDLL.csproj", "{46715A67-B134-473C-ACE4-EF6AA1C0E688}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{75A1BE35-D034-44D1-994E-005E32642C77}"
 EndProject

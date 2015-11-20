@@ -83,9 +83,9 @@
       <Project>{3fdbe129-0dc4-4f38-8608-b9be59bc89f8}</Project>
       <Name>CommonLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\testUnmanagedDLL\testUnmanagedDLL.csproj">
+    <ProjectReference Include="..\testUnmanagedDLL\CopyForexDLL.csproj">
       <Project>{46715a67-b134-473c-ace4-ef6aa1c0e688}</Project>
-      <Name>testUnmanagedDLL</Name>
+      <Name>CopyForexDLL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
