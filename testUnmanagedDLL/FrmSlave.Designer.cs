@@ -1,5 +1,5 @@
-﻿namespace testUMD {
-    partial class Form1 {
+﻿namespace CopyForex {
+    partial class FrmSlave {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -27,7 +27,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.chkHostSlave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,23 +74,11 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // chkHostSlave
-            // 
-            this.chkHostSlave.AutoSize = true;
-            this.chkHostSlave.Location = new System.Drawing.Point(527, 20);
-            this.chkHostSlave.Name = "chkHostSlave";
-            this.chkHostSlave.Size = new System.Drawing.Size(74, 24);
-            this.chkHostSlave.TabIndex = 4;
-            this.chkHostSlave.Text = "Slave";
-            this.chkHostSlave.UseVisualStyleBackColor = true;
-            this.chkHostSlave.CheckedChanged += new System.EventHandler(this.chkHostSlave_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 612);
-            this.Controls.Add(this.chkHostSlave);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -103,7 +90,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -112,6 +98,5 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.CheckBox chkHostSlave;
     }
 }

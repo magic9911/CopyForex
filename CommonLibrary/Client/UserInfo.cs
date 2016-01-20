@@ -14,10 +14,7 @@ namespace Norr.CommonLib.Client
         /// </summary>
         public string Nick { get; set; }
 
-        /// <summary>
-        /// Be a host?
-        /// </summary>
-        public bool isHost { get; set; }
+        
         
     }
 }

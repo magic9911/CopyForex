@@ -11,11 +11,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 
-namespace testUMD {
-    public partial class Form1 : Form, IMsgView {
+namespace CopyForex {
+    public partial class FrmSlave : Form, IMsgView {
         private MsgController msgController;
 
-        public Form1() {
+        public FrmSlave() {
             InitializeComponent();
         }
 
@@ -38,8 +38,7 @@ namespace testUMD {
             msgController = new MsgController();
             msgController.FormView = this;
             msgController.UserInfo = new UserInfo() {
-                Nick = "Test" + new Random().Next(),
-                isHost = chkHostSlave.Checked
+                Nick = "Test" + new Random().Next()
             };
             msgController.Connect();
         }

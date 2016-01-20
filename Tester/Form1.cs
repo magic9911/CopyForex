@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using testUMD;
+using CopyForex;
 
 namespace Tester {
     public partial class Form1 : Form {
@@ -15,7 +15,11 @@ namespace Tester {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            testUnmanagedDLL.CopyDll.GUI_Form();
+            XNore.CopyDll.Init();
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            XNore.CopyDll.Shutdown();
         }
     }
 }

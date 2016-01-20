@@ -2,23 +2,22 @@
 using RGiesecke.DllExport;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using testUMD;
+using CopyForex;
 using System.Threading;
 using System;
-using CopyForex;
 
-namespace testUnmanagedDLL {
+namespace XNore {
     public class CopyDll {
-
-        private static Form1 oneForm;
+        public static FrmSlave Slave;
+        private static FrmMenu menu;
         private static Thread appThread;
-        private static SendData senddata = new SendData();
+        //private static SendData senddata = new SendData();
 
         public static string res = string.Empty;
 
 
-        [DllExport("GUI_Form", CallingConvention = CallingConvention.StdCall)]
-        public static void GUI_Form()
+        [DllExport("Init", CallingConvention = CallingConvention.StdCall)]
+        public static void Init()
         {
             appThread = new Thread(new ThreadStart(OpenForm));
             appThread.Start();
@@ -26,21 +25,40 @@ namespace testUnmanagedDLL {
 
         public static void OpenForm()
         {
-            Application.Run(oneForm = new Form1());
+            Slave = new FrmSlave();
+            menu = new FrmMenu();
+            menu.Show();
+            Application.Run();
         }
 
         [DllExport("Shutdown", CallingConvention = CallingConvention.StdCall)]
         public static void Shutdown()
         {
-            if (null == oneForm)
-                return;
+            /*
+            var tmp = new Form();
+            if (null != menu) {
+                tmp.Invoke(new Action(() => {
+                    menu.Close();
+                    menu.Dispose();
+                    menu = null;
+                }));
+            }
 
-            oneForm.Invoke(new Action(() => {
-                oneForm.Close();
-                oneForm.Dispose();
-                oneForm = null;
-            }));
+            if (null != Slave) {
+                tmp.Invoke(new Action(() => {
+                    Slave.Close();
+                    Slave.Dispose();
+                    Slave = null;
+                }));
+            }
+            */
 
+            try {
+                appThread.Abort();
+            } catch (Exception) { }
+
+            Application.Exit();
+            //AppDomain.Unload(AppDomain.CurrentDomain);
         }
 
 
@@ -53,7 +71,7 @@ namespace testUnmanagedDLL {
 
             var Pos = Marshal.PtrToStringAnsi(charPos);
 
-            oneForm.SendAll(Pos);
+            Slave.SendAll(Pos);
             //oneForm.Invoke(new Action(() => {
             //    res = oneForm.SendData("POST;" + Balance.ToString() + ";" + Pos);
             //}));
@@ -75,7 +93,7 @@ namespace testUnmanagedDLL {
             //    res = oneForm.SendData("NewOrder;" + Symbol);
             //}));
 
-            senddata.Send("NewOrder;" + Symbol);
+            //senddata.Send("NewOrder;" + Symbol);
             return Marshal.StringToHGlobalUni(res);
         }
 
@@ -90,7 +108,7 @@ namespace testUnmanagedDLL {
             //    res = oneForm.SendData("CloseOrder;" + id.ToString());
             //}));
 
-            senddata.Send("CloseOrder;" + id.ToString());
+            //senddata.Send("CloseOrder;" + id.ToString());
             return Marshal.StringToHGlobalUni(res);
         }
 
@@ -103,13 +121,13 @@ namespace testUnmanagedDLL {
         [DllExport("FormChangeTitle", CallingConvention = CallingConvention.StdCall)]
         public static void FormChangeTitle(IntPtr title)
         {
-            if (null == oneForm)
+            if (null == menu)
                 return;
 
             var Tital = Marshal.PtrToStringAnsi(title);
 
-            oneForm.Invoke(new Action(() => {
-                oneForm.Text = Tital;
+            menu.Invoke(new Action(() => {
+                menu.Text = Tital;
             }));
         }
     }
