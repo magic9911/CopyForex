@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 
 namespace Nore.CommonLib.Model {
+
+    [Serializable]
     public class OrderModel {
         /// <summary>
         /// Order Id

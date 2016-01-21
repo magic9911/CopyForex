@@ -42,16 +42,7 @@ namespace CopyForex {
             };
             msgController.Connect();
         }
-
-        private void chkHostSlave_CheckedChanged(object sender, EventArgs e) {
-            var chkBox = sender as CheckBox;
-            if (chkBox.Checked) {
-                chkBox.Text = "Host";
-            } else {
-                chkBox.Text = "Slave";
-            }
-        }
-
+        
         public void SendAll(string msg) {
             if (null != msgController) {
                 MessageData msgData = new MessageData();
@@ -86,6 +77,10 @@ namespace CopyForex {
 
         public void RemoveUserFromList(string nick) {
             msg("User quited : " + nick);
+        }
+
+        private void btnSend_Click(object sender, EventArgs e) {
+            SendAll("Hello from Slave");
         }
     }
 }

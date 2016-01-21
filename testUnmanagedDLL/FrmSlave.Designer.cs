@@ -27,6 +27,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,17 +75,28 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // Form1
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(455, 13);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(161, 38);
+            this.btnSend.TabIndex = 4;
+            this.btnSend.Text = "send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // FrmSlave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 612);
+            this.Controls.Add(this.btnSend);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "FrmSlave";
             this.Text = "Project Copy";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
@@ -98,5 +110,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnSend;
     }
 }

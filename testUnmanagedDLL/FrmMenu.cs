@@ -14,7 +14,7 @@ namespace CopyForex {
         }
 
         private void btnMaster_Click(object sender, EventArgs e) {
-            
+            new FrmServer().Show();
         }
 
         private void btnSlave_Click(object sender, EventArgs e) {

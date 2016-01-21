@@ -129,10 +129,10 @@ namespace CopyForex.Client {
                 Disconnect();
                 //ChatRoom.OnLoginError(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
                 Console.WriteLine("Client " + ex);
-            } catch {
+            } catch (Exception ex) {
                 Disconnect();
                 //ChatRoom.OnLoginError("Can not login to server. Please try again later.");
-                Console.WriteLine("Client Disconnected.");
+                Console.WriteLine("Client Disconnected. " + ex);
             }
         }
 
