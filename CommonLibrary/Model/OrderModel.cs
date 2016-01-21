@@ -47,22 +47,22 @@ namespace Nore.CommonLib.Model {
         public string Status { get; private set; }
 
         /// <summary>
-        /// Constructor for Message Data model
+        /// Constructor for Order Data model
         /// </summary>
         /// <param name="id"></param>
         /// <param name="symbol"></param>
         /// <param name="lot"></param>
-        /// <param name="method"></param>
+        /// <param name="orderType"></param>
         /// <param name="price"></param>
         /// <param name="sl"></param>
         /// <param name="tp"></param>
         /// <param name="status"></param>
-        public OrderModel(string id, string symbol, double lot, string method, double price,
+        public OrderModel(string id, string symbol, double lot, string orderType, double price,
             double sl, double tp, string status) {
             OrderId = id;
             Symbol = symbol;
             Lot = lot;
-            Type = (OrderType)Enum.Parse(typeof(OrderType), method);
+            Type = (OrderType)Enum.Parse(typeof(OrderType), orderType);
             Price = price;
             SL = sl;
             TP = tp;
