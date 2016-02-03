@@ -39,5 +39,8 @@ namespace CopyForex.Client {
         /// <param name="nick">Destination nick</param>
         /// <param name="message">Message</param>
         void SendPrivateMessage(string nick, MessageData message);
+
+
+        void SendOrder(OrderData order);
     }
 }

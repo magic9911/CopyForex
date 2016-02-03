@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Nore.CommonLib.Model;
 
 namespace Nore.CommonLib.Message {
 
@@ -20,7 +19,7 @@ namespace Nore.CommonLib.Message {
         /// <summary>
         /// Order item model
         /// </summary>
-        public OrderModel Order { get; set; }
+        public OrderData Order { get; set; }
 
         /// <summary>
         /// Create a new Message data
@@ -32,7 +31,7 @@ namespace Nore.CommonLib.Message {
         /// Create a new Message data
         /// </summary>
         /// <param name="message"></param>
-        public MessageData(String message) : this("", null) {
+        public MessageData(String message) : this(message, null) {
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace Nore.CommonLib.Message {
         /// </summary>
         /// <param name="message"></param>
         /// <param name="order"></param>
-        public MessageData(String message, OrderModel order) {
+        public MessageData(String message, OrderData order) {
             MessageText = message;
             Order = order;
         }
@@ -58,7 +57,7 @@ namespace Nore.CommonLib.Message {
         /// <param name="status"></param>
         public MessageData(string id, string symbol, double lot, string orderType, double price,
             double sl, double tp, string status)
-            : this("", new OrderModel(id, symbol, lot, orderType, price, sl, tp, status)) {
+            : this("", new OrderData(id, symbol, lot, orderType, price, sl, tp, status)) {
         }
 
     }

@@ -38,5 +38,8 @@ namespace Norr.CommonLib.Service {
         /// client and server.
         /// </summary>
         void Logout();
+
+
+        void SendOrder(OrderData order);
     }
 }

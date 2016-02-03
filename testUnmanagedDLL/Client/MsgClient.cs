@@ -56,6 +56,10 @@ namespace CopyForex {
             _chatRoom.OnMessageReceived(nick, message);
         }
 
+        public void OnOrderReceived(OrderData order) {
+            _chatRoom.OnOrderReceived(order);
+        }
+
         /// <summary>
         /// This method is called from chat server to inform that a message
         /// is sent to the current used privately.

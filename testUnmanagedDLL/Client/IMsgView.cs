@@ -22,6 +22,12 @@ namespace CopyForex.Client {
         void OnPrivateMessageReceived(string nick, MessageData message);
 
         /// <summary>
+        /// This method is called when a order is sent.
+        /// </summary>
+        /// <param name="order">Order</param>
+        void OnOrderReceived(OrderData order);
+
+        /// <summary>
         /// This method is called when user successfully logged in to chat server.
         /// </summary>
         void OnLoggedIn();

@@ -29,12 +29,18 @@ namespace CopyForex {
             //label1.Text = "Client Socket Program - Server Connected ...";
         }
 
-        public void msg(string msg) {
+        public void print(string msg) {
+            if (InvokeRequired) {
+                Invoke(new Action(() => print(msg)));
+                return;
+            }
             textBox1.Text += "\r\n >> " + msg;
+            textBox1.SelectionStart = textBox1.TextLength;
+            textBox1.ScrollToCaret();
         }
 
         private void btnConnect_Click(object sender, EventArgs e) {
-            msg("Client connecting...");
+            print("Client connecting...");
             msgController = new MsgController();
             msgController.FormView = this;
             msgController.UserInfo = new UserInfo() {
@@ -52,35 +58,39 @@ namespace CopyForex {
         }
 
         public void OnMessageReceived(string nick, MessageData message) {
-            msg(string.Format("[HOST] {0} : {1}", nick, message.MessageText));
+            print(string.Format("[HOST] {0} : {1}", nick, message.MessageText));
         }
 
         public void OnPrivateMessageReceived(string nick, MessageData message) {
-            msg(string.Format("{0} : {1}", nick, message.MessageText));
+            print(string.Format("{0} : {1}", nick, message.MessageText));
         }
 
         public void OnLoggedIn() {
-            msg("Logged In.");
+            print("Logged In.");
         }
 
         public void OnLoginError(string errorMessage) {
-            msg("Error : " + errorMessage);
+            print("Error : " + errorMessage);
         }
 
         public void OnLoggedOut() {
-            msg("Logged Out.");
+            print("Logged Out.");
         }
 
         public void AddUserToList(UserInfo userInfo) {
-            msg("User joined : " + userInfo.Nick);
+            print("User joined : " + userInfo.Nick);
         }
 
         public void RemoveUserFromList(string nick) {
-            msg("User quited : " + nick);
+            print("User quited : " + nick);
         }
 
         private void btnSend_Click(object sender, EventArgs e) {
             SendAll("Hello from Slave");
+        }
+
+        public void OnOrderReceived(OrderData order) {
+            print("In come order : " + order);
         }
     }
 }

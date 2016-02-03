@@ -101,7 +101,7 @@ namespace CopyForex.Server {
         /// <param name="message">Message to be sent</param>
         public void SendMessageToRoom(MessageData message) {
             //Get ChatClient object
-            var senderClient = _clients[CurrentClient.ClientId];
+            ChatClient senderClient = _clients[CurrentClient.ClientId];
             if (senderClient == null) {
                 throw new ApplicationException("Can not send message before login.");
             }
@@ -109,9 +109,10 @@ namespace CopyForex.Server {
             //Send message to all online users
             Task.Factory.StartNew(
                 () => {
+                    Console.WriteLine("[" + senderClient.User.Nick + "] : " + message.MessageText);
                     foreach (var chatClient in _clients.GetAllItems()) {
                         try {
-                            Console.WriteLine("Server > " + senderClient.User.Nick + " : " + message.MessageText);
+                            Console.WriteLine("Send to " + chatClient.User.Nick);
                             chatClient.ClientProxy.OnMessageToRoom(senderClient.User.Nick, message);
                         } catch {
 
@@ -270,6 +271,36 @@ namespace CopyForex.Server {
             if (handler != null) {
                 handler(this, EventArgs.Empty);
             }
+        }
+
+        public void SendOrder(OrderData order) {
+            //Get ChatClient object
+            ChatClient senderClient = _clients[CurrentClient.ClientId];
+            if (senderClient == null) {
+                throw new ApplicationException("Can not send message before login.");
+            }
+
+            var masterClient = _clients[CurrentClient.ClientId];
+
+            //Send message to all online users
+            Task.Factory.StartNew(
+               new Action<object>((obj) => {
+                   var master = obj as ChatClient;
+                   Console.WriteLine("[" + senderClient.User.Nick + "] : " + order);
+
+                   foreach (var chatClient in _clients.GetAllItems()) {
+                       if (!master.Equals(chatClient)) {
+                           Console.WriteLine("This client is not master, then send it. " + chatClient.User.Nick);
+                           try {
+                               Console.WriteLine("Send to " + chatClient.User.Nick);
+                               chatClient.ClientProxy.OnOrderReceived(order);
+                           } catch { }
+                       } else {
+                           Console.WriteLine("This client is master, then don't send." + chatClient.User.Nick);
+                       }
+                   }
+               })
+            , masterClient);
         }
 
         #endregion

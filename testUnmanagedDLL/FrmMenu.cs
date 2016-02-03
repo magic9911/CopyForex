@@ -14,11 +14,21 @@ namespace CopyForex {
         }
 
         private void btnMaster_Click(object sender, EventArgs e) {
-            new FrmServer().Show();
+            // new instance form
+            FrmServer serverForm = new FrmServer();
+
+            // Set instance to Main DLL
+            CopyDll.Master = serverForm;
+            serverForm.Show();
         }
 
         private void btnSlave_Click(object sender, EventArgs e) {
-            new FrmSlave().Show();
+            // new instance form
+            FrmSlave slaveForm = new FrmSlave();
+
+            // Set instance to Main DLL
+            CopyDll.Slave = slaveForm;
+            slaveForm.Show();
         }
     }
 }

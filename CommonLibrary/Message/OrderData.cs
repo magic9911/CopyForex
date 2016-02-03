@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Nore.CommonLib.Model {
+namespace Nore.CommonLib.Message {
 
     [Serializable]
-    public class OrderModel {
+    public class OrderData {
         /// <summary>
         /// Order Id
         /// </summary>
@@ -59,7 +59,7 @@ namespace Nore.CommonLib.Model {
         /// <param name="sl"></param>
         /// <param name="tp"></param>
         /// <param name="status"></param>
-        public OrderModel(string id, string symbol, double lot, string orderType, double price,
+        public OrderData(string id, string symbol, double lot, string orderType, double price,
             double sl, double tp, string status) {
             OrderId = id;
             Symbol = symbol;
@@ -69,6 +69,10 @@ namespace Nore.CommonLib.Model {
             SL = sl;
             TP = tp;
             Status = status;
+        }
+
+        public override string ToString() {
+            return string.Format("Order Data : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", OrderId, Symbol, Lot, Type, Price, SL, TP, Status);
         }
 
     }

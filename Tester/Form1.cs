@@ -15,11 +15,11 @@ namespace Tester {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            XNore.CopyDll.Init();
+            CopyDll.Init();
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            XNore.CopyDll.Shutdown();
+            CopyDll.Shutdown();
         }
     }
 }

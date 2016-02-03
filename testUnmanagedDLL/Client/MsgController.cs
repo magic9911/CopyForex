@@ -145,7 +145,11 @@ namespace CopyForex.Client {
             //ChatRoom.OnLoggedOut();
             Console.WriteLine("Client logged out.");
         }
-        
+
+        public void SendOrder(OrderData order) {
+            _scsClient.ServiceProxy.SendOrder(order);
+        }
+
         #endregion
     }
 }

@@ -6,16 +6,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CopyForex.Client;
 using CopyForex.Server;
 using Hik.Communication.Scs.Communication.EndPoints.Tcp;
 using Hik.Communication.ScsServices.Service;
 using Nore.CommonLib.Message;
+using Norr.CommonLib.Client;
 using Norr.CommonLib.Service;
+using YuriNET.Common;
 
 namespace CopyForex {
-    public partial class FrmServer : Form {
+    public partial class FrmServer : Form, IMsgView {
+
+        private MsgController masterController = null;
+
+
         public FrmServer() {
             InitializeComponent();
+            NativeMethods.AllocConsole();
         }
         
         /// <summary>
@@ -64,6 +72,18 @@ namespace CopyForex {
             }
         }
 
+        public void print(string msg) {
+            if (InvokeRequired) {
+                Invoke(new Action(() => print(msg)));
+                return;
+            }
+
+            Console.WriteLine(msg);
+            txtLog.Text += "\r\n >> " + msg;
+            txtLog.SelectionStart = txtLog.TextLength;
+            txtLog.ScrollToCaret();
+        }
+
         private static void msgService_UserListChanged(object sender, EventArgs e) {
             updateUserList();
         }
@@ -85,6 +105,11 @@ namespace CopyForex {
 
         private void btnStart_Click(object sender, EventArgs e) {
             startServer();
+
+            masterController = new MsgController();
+            masterController.FormView = this;
+            masterController.UserInfo = new UserInfo("Master", true);
+            masterController.Connect();
         }
 
         private void btnStop_Click(object sender, EventArgs e) {
@@ -92,7 +117,52 @@ namespace CopyForex {
         }
 
         private void btnTestSend_Click(object sender, EventArgs e) {
-            _msgService.SendMessageToRoom(new MessageData("Hello All"));
+            //masterController.SendMessageToRoom(new MessageData("Hello All"));
+
+            // test send order
+            masterController.SendOrder(new OrderData("1", "EURUSD", 1.5, OrderType.Buy.ToString(), 1.111, 1.2, 1.8, "running"));
+        }
+
+        /// <summary>
+        /// Send order from DLL EXPORT
+        /// </summary>
+        /// <param name="order"></param>
+        public void SendOrder(OrderData order) {
+            print("Send : " + order);
+            masterController.SendOrder(order);
+        }
+
+        // IMsgView
+        public void OnMessageReceived(string nick, MessageData message) {
+            print("[" + nick + "] : " + message.MessageText);
+        }
+
+        public void OnPrivateMessageReceived(string nick, MessageData message) {
+            
+        }
+
+        public void OnLoggedIn() {
+            MessageBox.Show("Master logged in.");
+        }
+
+        public void OnLoginError(string errorMessage) {
+            
+        }
+
+        public void OnLoggedOut() {
+            
+        }
+
+        public void AddUserToList(UserInfo userInfo) {
+            
+        }
+
+        public void RemoveUserFromList(string nick) {
+            
+        }
+
+        public void OnOrderReceived(OrderData order) {
+            print("Order sent, " + order);
         }
     }
 }

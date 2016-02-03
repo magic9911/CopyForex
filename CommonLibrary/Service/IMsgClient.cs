@@ -44,5 +44,11 @@ namespace Nore.CommonLib.Service {
         /// <param name="nick">Informations of new user</param>
         void OnUserLogout(string nick);
 
+
+
+        /// <summary>
+        /// This method is called from server to inform that a new Order or update order
+        /// </summary>
+        void OnOrderReceived(OrderData order);
     }
 }

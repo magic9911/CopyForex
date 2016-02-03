@@ -5,9 +5,11 @@ using System.Windows.Forms;
 using CopyForex;
 using System.Threading;
 using System;
+using Nore.CommonLib.Message;
 
-namespace XNore {
+namespace CopyForex {
     public class CopyDll {
+        public static FrmServer Master;
         public static FrmSlave Slave;
         private static FrmMenu menu;
         private static Thread appThread;
@@ -17,14 +19,12 @@ namespace XNore {
 
 
         [DllExport("Init", CallingConvention = CallingConvention.StdCall)]
-        public static void Init()
-        {
+        public static void Init() {
             appThread = new Thread(new ThreadStart(OpenForm));
             appThread.Start();
         }
 
-        public static void OpenForm()
-        {
+        public static void OpenForm() {
             Slave = new FrmSlave();
             menu = new FrmMenu();
             menu.Show();
@@ -32,8 +32,7 @@ namespace XNore {
         }
 
         [DllExport("Shutdown", CallingConvention = CallingConvention.StdCall)]
-        public static void Shutdown()
-        {
+        public static void Shutdown() {
             /*
             var tmp = new Form();
             if (null != menu) {
@@ -61,10 +60,37 @@ namespace XNore {
             //AppDomain.Unload(AppDomain.CurrentDomain);
         }
 
+        /// <summary>
+        /// Send Order to all slaves by calling from Meta Trader
+        /// </summary>
+        /// <param name="ptrId"></param>
+        /// <param name="ptrSymbol"></param>
+        /// <param name="lot"></param>
+        /// <param name="ptrOrderType"></param>
+        /// <param name="price"></param>
+        /// <param name="sl"></param>
+        /// <param name="tp"></param>
+        /// <param name="ptrStatus"></param>
+        [DllExport("SendOrder", CallingConvention = CallingConvention.StdCall)]
+        public static void SendOrder(IntPtr ptrId, IntPtr ptrSymbol, double lot, IntPtr ptrOrderType,
+            double price, double sl, double tp, IntPtr ptrStatus) {
+
+            // Get data string from pointers
+            string id = Marshal.PtrToStringAnsi(ptrId);
+            string symbol = Marshal.PtrToStringAnsi(ptrSymbol);
+            string orderType = Marshal.PtrToStringAnsi(ptrOrderType);
+            string status = Marshal.PtrToStringAnsi(ptrStatus);
+
+            if (null != Master) {
+                OrderData order = new OrderData(id, symbol, lot, orderType, price, sl, tp, status);
+                Master.SendOrder(order);
+            } else {
+                Console.WriteLine("Master form is NULL !!!");
+            }
+        }
 
         [DllExport("Data_POST", CallingConvention = CallingConvention.StdCall)]
-        public static IntPtr Data_POST(double Balance, IntPtr charPos)
-        {
+        public static IntPtr Data_POST(double Balance, IntPtr charPos) {
             //string res = string.Empty;
             //if (null == oneForm)
             //    return Marshal.StringToHGlobalUni(res);
@@ -81,8 +107,7 @@ namespace XNore {
         }
 
         [DllExport("Get_NewOrder", CallingConvention = CallingConvention.StdCall)]
-        public static IntPtr Get_NewOrder(IntPtr symbol)
-        {
+        public static IntPtr Get_NewOrder(IntPtr symbol) {
             //string res = string.Empty;
             //if (null == oneForm)
             //    return Marshal.StringToHGlobalUni(res);
@@ -98,8 +123,7 @@ namespace XNore {
         }
 
         [DllExport("Get_CloseOrder", CallingConvention = CallingConvention.StdCall)]
-        public static IntPtr Get_CloseOrder(int id)
-        {
+        public static IntPtr Get_CloseOrder(int id) {
             //string res = string.Empty;
             //if (null == oneForm)
             //    return Marshal.StringToHGlobalUni(res);
@@ -113,14 +137,12 @@ namespace XNore {
         }
 
         [DllExport("Connect", CallingConvention = CallingConvention.StdCall)]
-        public static void Connect()
-        {
+        public static void Connect() {
             //senddata.Connect();
         }
 
         [DllExport("FormChangeTitle", CallingConvention = CallingConvention.StdCall)]
-        public static void FormChangeTitle(IntPtr title)
-        {
+        public static void FormChangeTitle(IntPtr title) {
             if (null == menu)
                 return;
 

@@ -14,7 +14,19 @@ namespace Norr.CommonLib.Client
         /// </summary>
         public string Nick { get; set; }
 
+
+        public bool IsMaster { get; set; }
         
-        
+
+        public UserInfo() {
+        }
+
+        public UserInfo(string nick) : this(nick, false) {
+        }
+
+        public UserInfo(string nick, bool isMaster) {
+            Nick = nick;
+            IsMaster = isMaster;
+        }
     }
 }
