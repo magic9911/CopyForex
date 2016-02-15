@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Concurrent;
 
 namespace CopyForex.Client {
     /// <summary>
@@ -38,8 +39,15 @@ namespace CopyForex.Client {
         /// </summary>
         private IScsServiceClient<IMsgService> _scsClient;
 
-
+        /// <summary>
+        /// The object which store own information.
+        /// </summary>
         public UserInfo UserInfo;
+
+        /// <summary>
+        /// A Key value pair of <see cref="OrderData"/>.
+        /// </summary>
+        public ConcurrentDictionary<string, OrderData> slaveOrders;
 
         #endregion
 
@@ -107,6 +115,21 @@ namespace CopyForex.Client {
         /// <param name="message">Message</param>
         public void SendPrivateMessage(string nick, MessageData message) {
             _scsClient.ServiceProxy.SendPrivateMessage(nick, message);
+        }
+
+        /// <summary>
+        /// Initialize Slave Orders.
+        /// </summary>
+        public void InitSlaveOrders() {
+            slaveOrders = new ConcurrentDictionary<string, OrderData>();
+        }
+
+        /// <summary>
+        /// Get instance of Slave Orders.
+        /// </summary>
+        /// <returns></returns>
+        public ConcurrentDictionary<string, OrderData> GetSlaveOrders() {
+            return slaveOrders;
         }
 
         #endregion
