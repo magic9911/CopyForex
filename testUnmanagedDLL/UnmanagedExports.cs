@@ -89,6 +89,21 @@ namespace CopyForex {
             }
         }
 
+        [DllExport("GetOrder", CallingConvention = CallingConvention.StdCall)]
+        public static IntPtr GetOrder(string orderId) {
+            string order;
+
+            // Not implemented.
+
+            // Found
+            // id,symbol,lot,orderType,price,sl,tp,status
+
+            // Not found
+            order = "OrderNotFound";
+
+            return Marshal.StringToHGlobalUni(order);
+        }
+
         [DllExport("Data_POST", CallingConvention = CallingConvention.StdCall)]
         public static IntPtr Data_POST(double Balance, IntPtr charPos) {
             //string res = string.Empty;
