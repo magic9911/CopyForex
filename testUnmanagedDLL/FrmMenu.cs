@@ -23,8 +23,9 @@ namespace CopyForex {
         }
 
         private void btnSlave_Click(object sender, EventArgs e) {
-            // new instance form
-            FrmSlave slaveForm = new FrmSlave();
+            // new instance ctrl & form
+            CopyDll.SlaveController = new Client.MsgController();
+            FrmSlave slaveForm = new FrmSlave(CopyDll.SlaveController);
 
             // Set instance to Main DLL
             CopyDll.Slave = slaveForm;

@@ -15,7 +15,7 @@ namespace CopyForex.Client {
     /// <summary>
     /// This class is a mediator with view and SCS system.
     /// </summary>
-    internal class MsgController : IMsgController {
+    public class MsgController : IMsgController {
         #region Private fields
 
         /// <summary>

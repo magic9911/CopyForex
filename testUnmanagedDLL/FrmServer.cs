@@ -18,12 +18,16 @@ using YuriNET.Common;
 namespace CopyForex {
     public partial class FrmServer : Form, IMsgView {
 
-        private MsgController masterController = null;
+        private MsgController masterController;
 
 
         public FrmServer() {
             InitializeComponent();
             NativeMethods.AllocConsole();
+        }
+
+        public FrmServer(MsgController msgCtrl) : this() {
+            masterController = msgCtrl;
         }
         
         /// <summary>
@@ -105,8 +109,10 @@ namespace CopyForex {
 
         private void btnStart_Click(object sender, EventArgs e) {
             startServer();
+            
+            if (null == masterController)
+                masterController = new MsgController();
 
-            masterController = new MsgController();
             masterController.FormView = this;
             masterController.UserInfo = new UserInfo("Master", true);
             masterController.Connect();
@@ -120,7 +126,7 @@ namespace CopyForex {
             //masterController.SendMessageToRoom(new MessageData("Hello All"));
 
             // test send order
-            masterController.SendOrder(new OrderData("1", "EURUSD", 1.5, OrderType.Buy.ToString(), 1.111, 1.2, 1.8, "running"));
+            masterController.SendOrder(new OrderData("1", "EURUSD", 1.5, OrderType.Buy, 1.111, 1.2, 1.8, StatusType.Running));
         }
 
         /// <summary>

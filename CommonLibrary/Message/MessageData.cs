@@ -55,8 +55,8 @@ namespace Nore.CommonLib.Message {
         /// <param name="sl"></param>
         /// <param name="tp"></param>
         /// <param name="status"></param>
-        public MessageData(string id, string symbol, double lot, string orderType, double price,
-            double sl, double tp, string status)
+        public MessageData(string id, string symbol, double lot, OrderType orderType, double price,
+            double sl, double tp, StatusType status)
             : this("", new OrderData(id, symbol, lot, orderType, price, sl, tp, status)) {
         }
 

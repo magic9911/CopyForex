@@ -11,6 +11,10 @@ namespace CopyForex {
     public class CopyDll {
         public static FrmServer Master;
         public static FrmSlave Slave;
+
+        public static Client.MsgController MasterController;
+        public static Client.MsgController SlaveController;
+
         private static FrmMenu menu;
         private static Thread appThread;
         //private static SendData senddata = new SendData();
@@ -25,7 +29,6 @@ namespace CopyForex {
         }
 
         public static void OpenForm() {
-            Slave = new FrmSlave();
             menu = new FrmMenu();
             menu.Show();
             Application.Run();
@@ -72,17 +75,15 @@ namespace CopyForex {
         /// <param name="tp"></param>
         /// <param name="ptrStatus"></param>
         [DllExport("SendOrder", CallingConvention = CallingConvention.StdCall)]
-        public static void SendOrder(IntPtr ptrId, IntPtr ptrSymbol, double lot, IntPtr ptrOrderType,
-            double price, double sl, double tp, IntPtr ptrStatus) {
+        public static void SendOrder(IntPtr ptrId, IntPtr ptrSymbol, double lot, int orderType,
+            double price, double sl, double tp, int status) {
 
             // Get data string from pointers
             string id = Marshal.PtrToStringAnsi(ptrId);
             string symbol = Marshal.PtrToStringAnsi(ptrSymbol);
-            string orderType = Marshal.PtrToStringAnsi(ptrOrderType);
-            string status = Marshal.PtrToStringAnsi(ptrStatus);
 
             if (null != Master) {
-                OrderData order = new OrderData(id, symbol, lot, orderType, price, sl, tp, status);
+                OrderData order = new OrderData(id, symbol, lot, (OrderType)orderType, price, sl, tp, (StatusType)status);
                 Master.SendOrder(order);
             } else {
                 Console.WriteLine("Master form is NULL !!!");
@@ -93,14 +94,29 @@ namespace CopyForex {
         public static IntPtr GetOrder(string orderId) {
             string order;
 
-            // Not implemented.
+            // Check slave form are initialized.
+            if (null != Slave) {
+                // Get instance of Slave orders.
+                var slaveOrders = SlaveController.GetSlaveOrders();
+                if (null == slaveOrders) {
+                    SlaveController.InitSlaveOrders();
+                    slaveOrders = SlaveController.GetSlaveOrders();
+                }
 
-            // Found
-            // id,symbol,lot,orderType,price,sl,tp,status
+                // Check order data is existed.
+                if (slaveOrders.ContainsKey(orderId)) {
+                    // Found.
+                    order = slaveOrders[orderId].ToRawData();
+                } else {
+                    // Not found.
+                    order = "OrderNotFound";
+                }
+            } else {
+                // Slave is not initialized.
+                order = "SlaveNotInitialized";
+            }
 
-            // Not found
-            order = "OrderNotFound";
-
+            // Return pointer of string.
             return Marshal.StringToHGlobalUni(order);
         }
 

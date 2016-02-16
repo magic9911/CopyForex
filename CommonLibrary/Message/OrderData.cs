@@ -46,10 +46,10 @@ namespace Nore.CommonLib.Message {
         /// <summary>
         /// Status of Order
         /// </summary>
-        public string Status { get; private set; }
+        public StatusType Status { get; private set; }
 
         /// <summary>
-        /// Constructor for Order Data model
+        /// Constructor for Order Data model.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="symbol"></param>
@@ -59,12 +59,12 @@ namespace Nore.CommonLib.Message {
         /// <param name="sl"></param>
         /// <param name="tp"></param>
         /// <param name="status"></param>
-        public OrderData(string id, string symbol, double lot, string orderType, double price,
-            double sl, double tp, string status) {
+        public OrderData(string id, string symbol, double lot, OrderType orderType, double price,
+            double sl, double tp, StatusType status) {
             OrderId = id;
             Symbol = symbol;
             Lot = lot;
-            Type = (OrderType)Enum.Parse(typeof(OrderType), orderType);
+            Type = orderType;
             Price = price;
             SL = sl;
             TP = tp;
@@ -75,14 +75,27 @@ namespace Nore.CommonLib.Message {
             return string.Format("Order Data : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", OrderId, Symbol, Lot, Type, Price, SL, TP, Status);
         }
 
+        public string ToRawData() {
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", OrderId, Symbol, Lot, (int)Type, Price, SL, TP, (int)Status);
+        }
+
     }
 
     /// <summary>
-    /// Enumularation of Order Type : BUY or SELL
+    /// Enumuration of Order Type.
     /// </summary>
     [Flags]
     public enum OrderType {
         Buy = 1,
         Sell = 2
+    }
+
+    /// <summary>
+    /// Enumuration of Status Type.
+    /// </summary>
+    [Flags]
+    public enum StatusType {
+        Closed = 0,
+        Running = 1
     }
 }
