@@ -86,8 +86,8 @@ namespace Nore.CommonLib.Message {
     /// </summary>
     [Flags]
     public enum OrderType {
-        Buy = 1,
-        Sell = 2
+        Buy = 0,
+        Sell = 1
     }
 
     /// <summary>
