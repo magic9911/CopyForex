@@ -272,6 +272,10 @@ namespace Nore.Server {
             }
         }
 
+        public void SendOrder(OrderData order) {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Sub classes

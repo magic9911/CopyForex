@@ -15,7 +15,7 @@ namespace CopyForex {
         public static Client.MsgController MasterController;
         public static Client.MsgController SlaveController;
 
-        private static FrmMenu menu;
+        //private static FrmMenu menu;
         private static Thread appThread;
         //private static SendData senddata = new SendData();
 
@@ -23,14 +23,21 @@ namespace CopyForex {
 
 
         [DllExport("Init", CallingConvention = CallingConvention.StdCall)]
-        public static void Init() {
-            appThread = new Thread(new ThreadStart(OpenForm));
+        public static void Init(int mode=0) {
+            if (mode==0) appThread = new Thread(new ThreadStart(OpenFormServer));
+            else if (mode == 1) appThread = new Thread(new ThreadStart(OpenFormClient));
             appThread.Start();
         }
 
-        public static void OpenForm() {
-            menu = new FrmMenu();
-            menu.Show();
+        public static void OpenFormServer() {
+            Master = new FrmServer();
+            Master.Show();
+            Application.Run();
+        }
+
+        public static void OpenFormClient() {
+            Slave = new FrmSlave();
+            Slave.Show();
             Application.Run();
         }
 
@@ -215,14 +222,14 @@ namespace CopyForex {
 
         [DllExport("FormChangeTitle", CallingConvention = CallingConvention.StdCall)]
         public static void FormChangeTitle(IntPtr title) {
-            if (null == menu)
-                return;
+            //if (null == menu)
+            //    return;
 
-            var Tital = Marshal.PtrToStringAnsi(title);
+            //var Tital = Marshal.PtrToStringAnsi(title);
 
-            menu.Invoke(new Action(() => {
-                menu.Text = Tital;
-            }));
+            //menu.Invoke(new Action(() => {
+            //    menu.Text = Tital;
+            //}));
         }
     }
 }
