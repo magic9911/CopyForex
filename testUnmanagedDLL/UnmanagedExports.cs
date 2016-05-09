@@ -129,34 +129,34 @@ namespace CopyForex {
 
         [DllExport("GetOrders", CallingConvention = CallingConvention.StdCall)]
         public static IntPtr GetOrders() {
-            string order;
+            string order = "aaa";
 
             // Check slave form are initialized.
             if (null != Slave) {
                 // Get instance of Slave orders.
                 var slaveOrders = SlaveController.GetSlaveOrders();
-                if (null == slaveOrders) {
-                    SlaveController.InitSlaveOrders();
-                    slaveOrders = SlaveController.GetSlaveOrders();
-                }
+                //if (null == slaveOrders) {
+                //    SlaveController.InitSlaveOrders();
+                //    slaveOrders = SlaveController.GetSlaveOrders();
+                //}
 
-                // isEmpty?
-                if (!slaveOrders.IsEmpty) {
-                    // Not empty.
-                    StringBuilder sbOrders = new StringBuilder();
-                    var delimiter = "";
-                    foreach (var o in slaveOrders) {
-                        if (null != o.Value) {
-                            sbOrders.Append(o.Value.ToRawData() + delimiter);
-                            delimiter = ";";
-                        }
-                    }
+                //    // isEmpty?
+                //    if (!slaveOrders.IsEmpty) {
+                //        // Not empty.
+                //        StringBuilder sbOrders = new StringBuilder();
+                //        var delimiter = "";
+                //        foreach (var o in slaveOrders) {
+                //            if (null != o.Value) {
+                //                sbOrders.Append(o.Value.ToRawData() + delimiter);
+                //                delimiter = ";";
+                //            }
+                //        }
 
-                    order = slaveOrders.ToString();
-                } else {
-                    // Empty.
-                    order = "";
-                }
+                //        order = slaveOrders.ToString();
+                //    } else {
+                //        // Empty.
+                //        order = "";
+                //    }
             } else {
                 // Slave is not initialized.
                 order = "SlaveNotInitialized";

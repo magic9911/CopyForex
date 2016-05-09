@@ -25,13 +25,16 @@ namespace CopyForex {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+            print("Client connecting...");
 
+            if (null == msgController)
+                msgController = new MsgController();
 
-            //msgController.SendMessageToRoom(new MessageData() {
-            //    MessageText = "HELLO WORLD"
-            //});
-            //clientSocket.Connect("127.0.0.1", 9000);
-            //label1.Text = "Client Socket Program - Server Connected ...";
+            msgController.FormView = this;
+            msgController.UserInfo = new UserInfo() {
+                Nick = "Test" + new Random().Next()
+            };
+            msgController.Connect();
         }
 
         public void print(string msg) {
